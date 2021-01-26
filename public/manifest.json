@@ -3,19 +3,16 @@
   "manifest_version": 2,
   "version": "0.1",
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
-  "action": { 
+  "action": {
     "default_popup": "index.html"
   },
   "background": {
     "scripts": ["background.js"]
   },
-  "content_scripts" : [
+  "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "css": [
-        "/static/css/main.chunk.css",
-        "/static/css/content.chunk.css"
-      ],
+      "css": ["/static/css/main.chunk.css", "/static/css/content.chunk.css"],
       "js": [
         "/static/js/0.chunk.js",
         "/static/js/5.chunk.js",
@@ -26,5 +23,3 @@
     }
   ]
 }
-
-
