@@ -4,3 +4,24 @@
  .my-extension h1 {
      color: #000;
  }
+ 
+ .huh-badge {
+    background-color: #333333;
+    color: #f2f2f2;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 32px;
+    font-size: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.popup-container {
+    width: 100vw;
+    height: 60vh;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
