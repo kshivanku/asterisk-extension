@@ -79,7 +79,18 @@ function placeBadges() {
         add_node(targetElement);
       }
     }
-  } else {
+  } else if (
+    currentUrl.indexOf("/hashtag") === -1 &&
+    currentUrl.indexOf("/search") === -1 &&
+    currentUrl.indexOf("/explore") === -1 &&
+    currentUrl.indexOf("/notifications") === -1 &&
+    currentUrl.indexOf("/messages") === -1 &&
+    currentUrl.indexOf("/bookmarks") === -1 &&
+    currentUrl.indexOf("/lists") === -1 &&
+    currentUrl.indexOf("/topics") === -1 &&
+    currentUrl.indexOf("/moments") === -1 &&
+    currentUrl.indexOf("/settings") === -1
+  ) {
     let nameElements = document.getElementsByClassName(
       "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
     );
