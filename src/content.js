@@ -59,9 +59,16 @@ function placeBadges() {
       node.innerText = `huh?`;
       node.addEventListener("click", (e) => {
         toggle();
+        let userinfodiv_arr = e.path[1].innerText.split(/\n/);
+        let un = "";
+        for (let elem of userinfodiv_arr) {
+          if (elem.indexOf("@") > -1) {
+            un = elem.split("@")[1];
+          }
+        }
         let clikedNode = {
-          displayname: e.path[1].innerText.split(/\n/)[0],
-          username: e.path[1].innerText.split(/\n/)[1].split("@")[1],
+          displayname: userinfodiv_arr[0],
+          username: un,
         };
         ReactDOM.render(
           <Overlay
