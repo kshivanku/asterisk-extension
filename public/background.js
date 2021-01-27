@@ -10,3 +10,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 chrome.action.onClicked.addListener(function (tab) {
   console.log("button clicked");
 });
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log(tab);
+  if (changeInfo.status === "complete") {
+    chrome.tabs.sendMessage(tabId, {
+      message: "url-changed",
+      url: tab.url,
+    });
+  }
+});
