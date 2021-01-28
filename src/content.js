@@ -40,7 +40,6 @@ function startExtension() {
           "css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu"
         )[0]
         .href.split(".com/")[1];
-      console.log("got huh user from home page");
       placeBadges();
       startObserver();
       chrome.storage.sync.set({ current_huh_user: huh_user }, function () {
@@ -76,10 +75,13 @@ function startObserver() {
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
     // observer.disconnect();
+  } else {
+    console.log("Observer not started");
   }
 }
 
 function placeBadges() {
+  console.log("inside placebadge");
   if (currentUrl.indexOf("/home") > -1 || currentUrl.indexOf("/status") > -1) {
     let nameElements = document.getElementsByClassName(
       "css-1dbjc4n r-k4xj1c r-18u37iz r-1wtj0ep"
@@ -124,9 +126,10 @@ function placeBadges() {
     currentUrl.indexOf("/settings") === -1
   ) {
     let nameElements = document.getElementsByClassName(
-      "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
+      //   "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
+      "css-1dbjc4n r-1awozwy r-18u37iz r-dnmrzs"
     );
-    let targetElement = nameElements[1];
+    let targetElement = nameElements[10];
     add_node(targetElement);
   }
 }
@@ -143,7 +146,9 @@ function add_node(targetElement) {
   node.addEventListener("click", (e) => {
     handleButtonClick(e);
   });
-  targetElement.appendChild(node);
+  if (targetElement.innerText.indexOf("huh?") === -1) {
+    targetElement.appendChild(node);
+  }
 }
 
 function handleButtonClick(e) {
@@ -165,8 +170,11 @@ function handleButtonClick(e) {
       username: un,
     };
   } else {
+    console.log(e);
     clikedNode.displayname = e.path[1].childNodes[0].innerText;
-    clikedNode.username = e.path[3].childNodes[1].innerText.split("@")[1];
+    clikedNode.username = e.path[3].childNodes[0].childNodes[1].innerText.split(
+      "@"
+    )[1];
   }
   ReactDOM.render(
     <Overlay
