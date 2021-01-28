@@ -11,15 +11,48 @@ const overlay = document.createElement("div");
 overlay.id = "overlay-root";
 overlay.style.display = "none";
 let currentUrl = "https://twitter.com/home";
+let huh_user = null;
 
 window["onload"] = function () {
-  setTimeout(startObserver, 2000);
   document.body.appendChild(overlay);
   Firebase.initializeApp(firebaseConfig);
 };
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "url-changed") {
+    currentUrl = request.url;
+    setTimeout(startExtension, 2000);
+  }
+});
+
+function startExtension() {
+  //   chrome.storage.sync.remove(["current_huh_user"], function (result) {
+  //     console.log('removed huh_user from storage');
+  //   });
+  chrome.storage.sync.get(["current_huh_user"], function (result) {
+    if (result["current_huh_user"]) {
+      huh_user = result["current_huh_user"];
+      placeBadges();
+      startObserver();
+    } else if (currentUrl.indexOf("/home") > -1) {
+      huh_user = document
+        .getElementsByClassName(
+          "css-4rbku5 css-18t94o4 css-1dbjc4n r-sdzlij r-1loqt21 r-ahm1il r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-13qz1uu"
+        )[0]
+        .href.split(".com/")[1];
+      console.log("got huh user from home page");
+      placeBadges();
+      startObserver();
+      chrome.storage.sync.set({ current_huh_user: huh_user }, function () {
+        console.log("Value is set to " + huh_user);
+      });
+    } else {
+      console.log("huh_user is undefined");
+    }
+  });
+}
+
 function startObserver() {
-  placeBadges();
   let aria_label = "";
   if (currentUrl.indexOf("/home") > -1) {
     aria_label = "Your Home Timeline";
@@ -28,7 +61,6 @@ function startObserver() {
   } else {
     aria_label = null;
   }
-  console.log(aria_label);
   if (aria_label) {
     const targetNode = document.querySelector(
       `[aria-label="Timeline: ${aria_label}"]`
@@ -94,7 +126,7 @@ function placeBadges() {
     let nameElements = document.getElementsByClassName(
       "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
     );
-    let targetElement = nameElements[2];
+    let targetElement = nameElements[1];
     add_node(targetElement);
   }
 }
@@ -133,7 +165,6 @@ function handleButtonClick(e) {
       username: un,
     };
   } else {
-    console.log(e);
     clikedNode.displayname = e.path[1].childNodes[0].innerText;
     clikedNode.username = e.path[3].childNodes[1].innerText.split("@")[1];
   }
@@ -143,6 +174,7 @@ function handleButtonClick(e) {
       username={clikedNode.username}
       toggle={toggle}
       Firebase={Firebase}
+      huh_user={huh_user}
     />,
     overlay
   );
@@ -155,12 +187,3 @@ function toggle() {
     overlay.style.display = "none";
   }
 }
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request);
-  if (request.message === "url-changed") {
-    console.log("url changed");
-    currentUrl = request.url;
-    setTimeout(startObserver, 2000);
-  }
-});

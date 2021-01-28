@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Overlay.css";
 import Editor from "./Components/Editor";
 
-const Overlay = ({ displayname, username, toggle, Firebase }) => {
+const Overlay = ({ displayname, username, toggle, Firebase, huh_user }) => {
   const [notes, setNotes] = useState(null);
   useEffect(() => {
     let ref = Firebase.database().ref(`/${username}`);
@@ -12,10 +12,12 @@ const Overlay = ({ displayname, username, toggle, Firebase }) => {
   }, [username]);
   const handleSubmit = () => {
     const newnote = document.getElementById("note-text").innerText;
-    const post = {
-      kshivanku: newnote,
-    };
-    Firebase.database().ref(`/${username}`).set(post);
+    let newNotesObj = {};
+    if (notes) {
+      newNotesObj = notes;
+    }
+    newNotesObj[huh_user] = newnote;
+    Firebase.database().ref(`/${username}`).set(newNotesObj);
   };
   return (
     <div className="overlay-container">
@@ -33,8 +35,10 @@ const Overlay = ({ displayname, username, toggle, Firebase }) => {
           <Editor
             notes={
               notes
-                ? notes["kshivanku"].length > 0
-                  ? notes["kshivanku"]
+                ? notes[huh_user]
+                  ? notes[huh_user].length > 0
+                    ? notes[huh_user]
+                    : null
                   : null
                 : null
             }
