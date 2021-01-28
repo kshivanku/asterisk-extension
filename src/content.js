@@ -81,7 +81,6 @@ function startObserver() {
 }
 
 function placeBadges() {
-  console.log("inside placebadge");
   if (currentUrl.indexOf("/home") > -1 || currentUrl.indexOf("/status") > -1) {
     let nameElements = document.getElementsByClassName(
       "css-1dbjc4n r-k4xj1c r-18u37iz r-1wtj0ep"
@@ -127,9 +126,11 @@ function placeBadges() {
   ) {
     let nameElements = document.getElementsByClassName(
       //   "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
-      "css-1dbjc4n r-1awozwy r-18u37iz r-dnmrzs"
+      //   "css-1dbjc4n r-1awozwy r-18u37iz r-dnmrzs"
+      "css-1dbjc4n r-15d164r r-1g94qm0"
     );
-    let targetElement = nameElements[10];
+    let targetElement =
+      nameElements[0].childNodes[0].childNodes[0].childNodes[0];
     add_node(targetElement);
   }
 }
@@ -170,11 +171,10 @@ function handleButtonClick(e) {
       username: un,
     };
   } else {
-    console.log(e);
     clikedNode.displayname = e.path[1].childNodes[0].innerText;
-    clikedNode.username = e.path[3].childNodes[0].childNodes[1].innerText.split(
-      "@"
-    )[1];
+    clikedNode.username = e.path[3].childNodes[0].childNodes[1].innerText
+      .split("@")[1]
+      .split(/\n/)[0];
   }
   ReactDOM.render(
     <Overlay
