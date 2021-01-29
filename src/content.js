@@ -151,7 +151,7 @@ function add_node(targetElement) {
 
 function handleButtonClick(e) {
   //   toggle();
-  let clikedNode = {
+  let clickedNode = {
     displayname: "none",
     username: "none",
   };
@@ -163,20 +163,20 @@ function handleButtonClick(e) {
         un = elem.split("@")[1];
       }
     }
-    clikedNode = {
+    clickedNode = {
       displayname: userinfodiv_arr[0],
       username: un,
     };
   } else {
-    clikedNode.displayname = e.path[1].childNodes[0].innerText;
-    clikedNode.username = e.path[3].childNodes[0].childNodes[1].innerText
+    clickedNode.displayname = e.path[1].childNodes[0].innerText;
+    clickedNode.username = e.path[3].childNodes[0].childNodes[1].innerText
       .split("@")[1]
       .split(/\n/)[0];
   }
   ReactDOM.render(
     <Overlay
-      displayname={clikedNode.displayname}
-      username={clikedNode.username}
+      displayname={clickedNode.displayname}
+      username={clickedNode.username}
       toggle={toggle}
       Firebase={Firebase}
       huh_user={huh_user}
