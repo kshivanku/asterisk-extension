@@ -9,7 +9,6 @@ import firebaseConfig from "./firebaseConfig";
 
 const overlay = document.createElement("div");
 overlay.id = "overlay-root";
-overlay.style.display = "none";
 let currentUrl = "https://twitter.com/home";
 let huh_user = null;
 
@@ -125,8 +124,6 @@ function placeBadges() {
     currentUrl.indexOf("/settings") === -1
   ) {
     let nameElements = document.getElementsByClassName(
-      //   "css-901oao r-18jsvk2 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
-      //   "css-1dbjc4n r-1awozwy r-18u37iz r-dnmrzs"
       "css-1dbjc4n r-15d164r r-1g94qm0"
     );
     let targetElement =
@@ -153,7 +150,7 @@ function add_node(targetElement) {
 }
 
 function handleButtonClick(e) {
-  toggle();
+  //   toggle();
   let clikedNode = {
     displayname: "none",
     username: "none",
@@ -183,15 +180,17 @@ function handleButtonClick(e) {
       toggle={toggle}
       Firebase={Firebase}
       huh_user={huh_user}
+      instanceNumber={Math.random() * 1000}
     />,
     overlay
   );
 }
 
 function toggle() {
-  if (overlay.style.display === "none") {
-    overlay.style.display = "block";
-  } else {
-    overlay.style.display = "none";
-  }
+  //   if (overlay.style.display === "none") {
+  //     overlay.style.display = "block";
+  //   } else {
+  //     overlay.style.display = "none";
+  //   }
+  ReactDOM.unmountComponentAtNode(overlay);
 }

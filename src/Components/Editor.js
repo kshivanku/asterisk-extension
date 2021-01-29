@@ -1,17 +1,19 @@
 import React from "react";
 import "./styles/Editor.css";
+import { motion } from "framer-motion";
 
-const Editor = ({ notes }) => {
+const Editor = ({ notes, variants }) => {
   return (
     <React.Fragment>
-      <div
+      <motion.div
+        variants={variants}
         id="note-text"
         contentEditable="true"
         data-placeholder="Write your note here..."
         className="note-text"
       >
         {notes ? notes : ""}
-      </div>
+      </motion.div>
     </React.Fragment>
   );
 };
