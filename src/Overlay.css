@@ -24,6 +24,12 @@
   margin: auto;
 }
 
+.overlay-content header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .overlay-content h1 {
   margin-bottom: 10px;
 }

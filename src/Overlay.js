@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Overlay.css";
 import Editor from "./Components/Editor";
 import PublicNotes from "./Components/PublicNotes";
+import DoneButton from "./Components/DoneButton";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Overlay = ({
@@ -77,7 +78,11 @@ const Overlay = ({
         authors.splice(huh_user, 1);
       }
       if (authors.length > 0) {
-        return true;
+        for (let author of authors) {
+          if (notes[author].length > 0) {
+            return true;
+          }
+        }
       } else {
         return false;
       }
@@ -109,10 +114,15 @@ const Overlay = ({
               variants={overlayContentVariants}
               className="overlay-content"
             >
-              <motion.h1>{displayname}</motion.h1>
-              <motion.p>
-                <a href={`https://twitter.com/${huh_user}`}>@{username}</a>
-              </motion.p>
+              <header>
+                <div>
+                  <motion.h1>{displayname}</motion.h1>
+                  <motion.p>
+                    <a href={`https://twitter.com/${huh_user}`}>@{username}</a>
+                  </motion.p>
+                </div>
+                <DoneButton handleSubmit={handleSubmit} />
+              </header>
               <Editor
                 notes={
                   notes

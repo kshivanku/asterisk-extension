@@ -1,15 +1,15 @@
 {
-  "name": "Huh Extension With App",
+  "name": "Asterisk",
   "manifest_version": 2,
   "version": "0.1",
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "icons/v3/icon_16.png",
-      "32": "icons/v3/icon_32.png",
-      "48": "icons/v3/icon_48.png",
-      "128": "icons/v3/icon_128.png"
+      "16": "icons/v1/icon_16.png",
+      "32": "icons/v1/icon_32.png",
+      "48": "icons/v1/icon_48.png",
+      "128": "icons/v1/icon_128.png"
     }
   },
   "permissions": ["tabs", "storage"],
