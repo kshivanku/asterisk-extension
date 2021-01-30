@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Overlay.css";
 import Editor from "./Components/Editor";
+import PublicNotes from "./Components/PublicNotes";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Overlay = ({
@@ -30,8 +31,8 @@ const Overlay = ({
       y: 0,
       transition: {
         // when: "beforeChildren",
-        delayChildren: 0.3,
-        duration: 0.6,
+        delayChildren: 0.2,
+        duration: 0.3,
         ease: [0.43, 0.13, 0.23, 0.96],
       },
     },
@@ -67,6 +68,21 @@ const Overlay = ({
     Firebase.database().ref(`/${username}`).set(newNotesObj);
     setIsVisible(false);
   };
+  const publicNotesExit = () => {
+    if (!notes) {
+      return false;
+    } else {
+      let authors = notes ? Object.keys(notes) : [];
+      if (authors.indexOf(huh_user) > -1) {
+        authors.splice(huh_user, 1);
+      }
+      if (authors.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
   return (
     <AnimatePresence>
       {isVisible && (
@@ -94,7 +110,9 @@ const Overlay = ({
               className="overlay-content"
             >
               <motion.h1>{displayname}</motion.h1>
-              <motion.p>{username}</motion.p>
+              <motion.p>
+                <a href={`https://twitter.com/${huh_user}`}>@{username}</a>
+              </motion.p>
               <Editor
                 notes={
                   notes
@@ -106,6 +124,9 @@ const Overlay = ({
                     : null
                 }
               />
+              {publicNotesExit() && (
+                <PublicNotes notes={notes} huh_user={huh_user} />
+              )}
             </motion.div>
           </motion.div>
         </motion.div>

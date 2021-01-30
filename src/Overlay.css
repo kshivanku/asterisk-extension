@@ -24,6 +24,19 @@
   margin: auto;
 }
 
+.overlay-content h1 {
+  margin-bottom: 10px;
+}
+
 .overlay-content p {
   color: #333333;
+}
+
+.overlay-content a {
+  text-decoration: none;
+  color: #aaaaaa;
+}
+
+.overlay-content a:hover {
+  text-decoration: underline;
 }
