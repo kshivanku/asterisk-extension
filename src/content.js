@@ -3,9 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./content.css";
 import Overlay from "./Overlay";
-import Firebase from "firebase/app";
-import "firebase/database";
-import firebaseConfig from "./firebaseConfig";
 
 const overlay = document.createElement("div");
 overlay.id = "overlay-root";
@@ -14,7 +11,6 @@ let huh_user = null;
 
 window["onload"] = function () {
   document.body.appendChild(overlay);
-  Firebase.initializeApp(firebaseConfig);
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -25,9 +21,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function startExtension() {
-  //   chrome.storage.sync.remove(["current_huh_user"], function (result) {
-  //     console.log('removed huh_user from storage');
-  //   });
   chrome.storage.sync.get(["current_huh_user"], function (result) {
     if (result["current_huh_user"]) {
       huh_user = result["current_huh_user"];
@@ -177,8 +170,6 @@ function handleButtonClick(e) {
     <Overlay
       displayname={clickedNode.displayname}
       username={clickedNode.username}
-      toggle={toggle}
-      Firebase={Firebase}
       huh_user={huh_user}
       instanceNumber={Math.random() * 1000}
     />,
@@ -186,11 +177,11 @@ function handleButtonClick(e) {
   );
 }
 
-function toggle() {
-  //   if (overlay.style.display === "none") {
-  //     overlay.style.display = "block";
-  //   } else {
-  //     overlay.style.display = "none";
-  //   }
-  ReactDOM.unmountComponentAtNode(overlay);
-}
+// function toggle() {
+//   //   if (overlay.style.display === "none") {
+//   //     overlay.style.display = "block";
+//   //   } else {
+//   //     overlay.style.display = "none";
+//   //   }
+//   ReactDOM.unmountComponentAtNode(overlay);
+// }
